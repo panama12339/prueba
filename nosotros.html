@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>nosotros</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!--header seccion -->
+    <header class="header">
+        <a href="#" class="logo"> <i class="fas fa-shopping-basket"></i> groco</a>
+
+        <nav class="navbar">
+            <a href="index.html">inicio</a>
+            <a href="nosotros.html">Nosotros</a>
+            <a href="menu.php">Menu</a>
+            <a href="categorias.html">Categorias</a>
+            <a href="galeria.html">Galeria</a>
+            <a href="blogs.html">Blogs</a>
+        </nav>
+        <div class="icons">
+            <div class="fas fa-bars" id="menu-btn"></div>
+            <div class="fas fa-search" id="search-btn"></div>
+            <div class="fas fa-shopping-cart" id="cart-btn"></div>
+            <div class="fas fa-user" id="login-btn"></div>
+        </div>
+
+        <form action="" class="search-form">
+            <input type="search" id="search-box" placeholder="search here...">
+            <label for="search-box" class="fas fa-search"></label>
+        </form>
+
+        <div class="shopping-cart">
+            <div class="box">
+                <img src="">
+
+            </div>
+
+        </div>
+
+        <form action="" class="login-form">
+            <h3>Inicia Sesion</h3>
+            <input type="email" placeholder="introduce tu email" class="box">
+            <input type="password" placeholder="introduce tu password" class="box">
+            <p>Olvidaste tu contraseña <a href="#">click aqui</a></p>
+            <p>No tengo una cuenta <a href="#">Crea ahora</a></p>
+            <input type="submit" value="Iniciar Sesion " class="btn">
+        </form>
+    </header>
+
+    <script>
+        function addProducto(id, token) {
+            let url = 'clases/carrito.php';
+            let formData = new FormData();
+            formData.append('id', id);
+            formData.append('token', token);
+
+            fetch(url, {
+                method: 'POST',
+                body: formData,
+                mode: 'cors'
+            })
+                .then(response => response.json())  // Debes usar .then() en lugar de .the()
+                .then(data => {  // Debes usar .then() en lugar de .the()
+                    if (data.ok) {
+                        let elemento = document.getElementById("num_cart");
+                        elemento.innerHTML = data.numero;
+                    }
+                });
+    }
+    </script>
+
+    
+
+    
+
+
+
+
+
+    <script src="script.js"></script>
+</body>
+</html>

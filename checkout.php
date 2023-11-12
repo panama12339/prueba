@@ -1,6 +1,6 @@
 <?php
-include("config/config.php");
-include("config/database.php");
+include("./config/config.php");
+include("./config/database.php");
 
 
 $productos = isset($_SESSION['carrito']['productos']) ? $_SESSION['carrito']['productos'] : null;
@@ -38,11 +38,10 @@ if ($productos != null) {
 }
 
 mysqli_close($con);
+
+
+
 ?>
-
-
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -148,25 +147,20 @@ mysqli_close($con);
                                             onchange="actualizaCantidad(this.value, <?php echo $_id ?>)">
                                     </td>
                                     <td>
-                                        <div id="subtotal_<?php echo $_id; ?>" name="subtotal[]">
+                                        <div id="subtotal_<?php  echo $_id; ?>" name="subtotal[]">
                                             <?php echo MONEDA . number_format($subtotal, 2, '.', ','); ?>
                                         </div>
                                     </td>
-                                    <td><a id="elimiar" class="btn btn-warning btn-sm" data-bs-id="<?php echo
+                                    <td><a id="elimiar" class="btn btn" data-bs-id="<?php echo
                                         $_id; ?>" data-bs-toggle="modal" data-bs-target="#eliminaModal">Eliminar </a></td>
 
                                 </tr>
-                            <?php } ?>
+                                <?php } ?>
                             <tr>
                                 <td colspan="3"></td>
                                 <td colspan="2">
                                     <p class="h3" id="total">
-                                        <?php echo MONEDA . number_format(
-                                            $total,
-                                             2,
-                                            '.',
-                                            ','
-                                        ); ?>
+                                        <?php echo MONEDA . number_format( $total,2,'.',  ','); ?>
                                     </p>
                                 </td>
 
@@ -241,7 +235,7 @@ mysqli_close($con);
                         let list = document.getElementsByName('subtotal[]')
 
                         for (let i = 0; i < list.length; i++) {
-                            total += parseFloat(list[i].innerHTML.replace(/[$,]/g, ''))
+                            total += parseFloat(list[i].innerHTML.replace(/[Bs,]/g, ''))
                         }
 
                         total = new Intl.NumerFormat('en-US', {
@@ -284,3 +278,4 @@ mysqli_close($con);
 </body>
 
 </html>
+?>

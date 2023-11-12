@@ -1,8 +1,9 @@
-<?php
-include("config/config.php");
-include("config/database.php");
 
-$datos = array(); // Creamos un array para almacenar los datos de la respuesta
+<?php
+include("./config/config.php");
+include("./config/database.php");
+
+$datos = array();
 
 if (isset($_POST['action'])) {
     $action = $_POST['action'];
@@ -11,13 +12,12 @@ if (isset($_POST['action'])) {
     if ($action == 'agregar') {
         $cantidad = isset($_POST['cantidad']) ? $_POST['cantidad'] : 0;
         $respuesta = agregar($id, $cantidad);
-        if ($respuesta > 0) {
+        if ($respuesta !== false) {
             $datos['ok'] = true;
         } else {
             $datos['ok'] = false;
         }
         $datos['sub'] = json_encode(number_format($respuesta, 2, '.', ','));
-        //$datos['sub'] = MONEDA . number_format($respuesta, 2, '.', ',');
     } else {
         $datos['ok'] = false;
     }
@@ -31,30 +31,31 @@ function agregar($id, $cantidad) {
         if (isset($_SESSION['carrito']['productos'][$id])) {
             $_SESSION['carrito']['productos'][$id] = $cantidad;
 
-            $db = new Database();
-            $con = $db->conectar();
-            
-            $sql = "SELECT precio FROM productos WHERE id = ? AND activo = 1 LIMIT 1";
-            $stmt = mysqli_prepare($con, $sql);
+            $db = new database(); // Instancia de la clase database
+            $con = $db->conectar(); // Llamada al método conectar()
 
-            if ($stmt) {
-                mysqli_stmt_bind_param($stmt, "i", $id);
-                mysqli_stmt_execute($stmt);
-                mysqli_stmt_bind_result($stmt, $precio);
-                mysqli_stmt_fetch($stmt);
-                mysqli_stmt_close($stmt);
+            if ($con) {
+                $sql = "SELECT precio FROM productos WHERE id = ? AND activo = 1 LIMIT 1";
+                $stmt = mysqli_prepare($con, $sql);
 
-                if ($precio !== null) {
-                    $res = $cantidad * $precio;
+                if ($stmt) {
+                    mysqli_stmt_bind_param($stmt, "i", $id);
+                    mysqli_stmt_execute($stmt);
+                    mysqli_stmt_bind_result($stmt, $precio);
+                    mysqli_stmt_fetch($stmt);
+                    mysqli_stmt_close($stmt);
+
+                    if ($precio !== null) {
+                        $res = $cantidad * $precio;
+                    }
                 }
-            }
 
-            mysqli_close($con);
-            return $res;
+                mysqli_close($con);
+                return $res;
+            }
         }
-    } else {
-        return $res;
     }
+    return false; // Devolver false si hay un problema en la conexión a la base de datos
 }
 
 // Devolvemos la respuesta en formato JSON

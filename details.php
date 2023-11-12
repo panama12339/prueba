@@ -1,6 +1,6 @@
 <?php
-include("config/config.php");
-include("config/database.php");
+include("./config/config.php");
+include("./config/database.php");
 
 // Detalles
 $id = isset($_GET['id']) ? $_GET['id'] : '';

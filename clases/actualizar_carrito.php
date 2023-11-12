@@ -1,4 +1,3 @@
-
 <?php
 include("./config/config.php");
 include("./config/database.php");
@@ -31,8 +30,14 @@ function agregar($id, $cantidad) {
         if (isset($_SESSION['carrito']['productos'][$id])) {
             $_SESSION['carrito']['productos'][$id] = $cantidad;
 
-            $db = new database(); // Instancia de la clase database
-            $con = $db->conectar(); // Llamada al método conectar()
+            // Establecer la conexión a la base de datos
+            $con = mysqli_connect(
+                'localhost',
+                'root',
+                '',
+                'tienda_online'
+            ) ;
+            
 
             if ($con) {
                 $sql = "SELECT precio FROM productos WHERE id = ? AND activo = 1 LIMIT 1";

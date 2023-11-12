@@ -1,6 +1,6 @@
 <?php
-include("config/config.php");
-include("config/database.php");
+include("./config/config.php");
+include("./config/database.php");
 
 $sql = "SELECT id, nombre, precio FROM productos WHERE activo=1";
 $result = mysqli_query($con, $sql);

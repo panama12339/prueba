@@ -1,7 +1,7 @@
 <?php
 
-include("./config/config.php");
-include("./config/database.php");
+include("config/config.php");
+include("config/database.php");
 
 if (isset($_POST['id'])) {
     $id = $_POST['id'];

@@ -3,7 +3,7 @@
 define("KEY_TOKEN", "APR.wqc-354*");
 define("MONEDA", "Bs");
 
-session_start();
+//session_start();
 
 
 

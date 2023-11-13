@@ -1,7 +1,7 @@
 <?php
 
-include("config/config.php");
-include("config/database.php");
+include("../config/config.php"); // Ajusta la ruta a la ubicación de config.php
+include("../config/database.php"); // Ajusta la ruta a la ubicación de database.php
 
 if (isset($_POST['id'])) {
     $id = $_POST['id'];
@@ -18,15 +18,13 @@ if (isset($_POST['id'])) {
 
         }
 
-        $datos['numero'] = count ($_SESSION['carrito']['productos']);
-        $datos['ok']=true;
+        $datos['numero'] = count($_SESSION['carrito']['productos']);
+        $datos['ok'] = true;
         
 
     }else{
         $datos['ok'] = false;
     }
-
-
 
 }else {
     $datos['ok'] = false;

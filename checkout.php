@@ -5,7 +5,7 @@ include("config/database.php");
 
 $productos = isset($_SESSION['carrito']['productos']) ? $_SESSION['carrito']['productos'] : null;
 
-//print_r($_SESSION);
+print_r($_SESSION);
 
 $lista_carrito = array();
 
@@ -151,7 +151,7 @@ mysqli_close($con);
                                             <?php echo MONEDA . number_format($subtotal, 2, '.', ','); ?>
                                         </div>
                                     </td>
-                                    <td><a id="elimiar" class="btn btn" data-bs-id="<?php echo
+                                    <td><a id="elimiar" class="btn btn-warning btn-sm" data-bs-id="<?php echo
                                         $_id; ?>" data-bs-toggle="modal" data-bs-target="#eliminaModal">Eliminar </a></td>
 
                                 </tr>
@@ -160,7 +160,8 @@ mysqli_close($con);
                                 <td colspan="3"></td>
                                 <td colspan="2">
                                     <p class="h3" id="total">
-                                        <?php echo MONEDA . number_format( $total,2,'.',  ','); ?>
+                                        <?php echo MONEDA . number_format( $total,2,  '.',  ','
+                                        ); ?>
                                     </p>
                                 </td>
 
@@ -204,50 +205,7 @@ mysqli_close($con);
 
 
     <script>
-        let eliminaModal = document.getElementById('elimnaModal')
-        eliminaModal.addEventListener('show.bs.modal', function (event) {
-            let button = event.relatedTarget
-            let id = button.getAttribute('data-bs-id')
-            let buttonElimna = eliminaModal.querySelector('.modal-footer #btn-elimina')
-            buttonElimna.value = id
-        })
-
-        function actualizaCantidad(cantidad, id) {
-            let url = 'clases/actualizar_carrito.php';
-            let formData = new FormData();
-            formData.append('action', 'agregar');
-            formData.append('id', id);
-
-            formData.append('cantidad', cantidad);
-
-            fetch(url, {
-                method: 'POST',
-                body: formData,
-                mode: 'cors'
-            })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.ok) {
-                        let divsubtotal = document.getElementById('subtotal_' + id)
-                        divsubtotal.innerHTML = data.sub
-
-                        let total = 0.00
-                        let list = document.getElementsByName('subtotal[]')
-
-                        for (let i = 0; i < list.length; i++) {
-                            total += parseFloat(list[i].innerHTML.replace(/[Bs,]/g, ''))
-                        }
-
-                        total = new Intl.NumerFormat('en-US', {
-                            mininumFractionDigits: 2
-                        }).format(total)
-                        document.getElementById('total').innerHTML = '<?php echo MONEDA; ?>' + total
-                    }
-                })
-        }
-
-
-
+    
 
         function actualizaCantidad(cantidad, id) {
             let url = 'clases/actualizar_carrito.php';
